@@ -1,4 +1,4 @@
-#Rent calculator
+# Rent calculator
 
 This is a simple application to track rent payments.
 The rent calculator creates text message that could be 
