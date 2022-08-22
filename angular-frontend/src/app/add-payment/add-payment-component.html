@@ -1,0 +1,28 @@
+<div class="col-md-6 offset-md-3">
+  <h3 class="text-center">Add new payment</h3>
+  <form (ngSubmit)="onSubmit()">
+
+    <div class="form-group">
+      <label>Water</label>
+      <input type="number" class="form-control" id="water" [(ngModel)]="payment.water" name="Water">
+    </div>
+
+    <div class="form-group">
+      <label>Electricity</label>
+      <input type="number" class="form-control" id="electricity" [(ngModel)]="payment.electricity" name="Electricity">
+    </div>
+
+    <div class="form-group">
+      <label>Gas</label>
+      <input type="number" class="form-control" id="gas" [(ngModel)]="payment.gas" name="Gas">
+    </div>
+
+    <div class="form-group">
+      <label>Payment Date</label>
+      <input type="date" class="form-control" id="paymentDate" [(ngModel)]="payment.paymentDate" name="paymentDate">
+    </div>
+
+    <button class="btn btn-success" type="submit">Add</button>
+
+  </form>
+</div>
