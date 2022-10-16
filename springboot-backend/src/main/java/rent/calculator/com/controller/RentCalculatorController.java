@@ -50,9 +50,14 @@ public class RentCalculatorController {
         return ok(updated);
     }
 
+    @PutMapping("/payments/recalculate")
+    public PaymentDTO recalculate(@RequestBody PaymentDTO paymentDTO) {
+        return paymentService.recalculate(paymentDTO);
+    }
+
     @DeleteMapping("/payments/delete/{id}")
     public ResponseEntity<Map<String, Boolean>> delete(@PathVariable Long id) {
-        paymentCreationService.delete(id);
+        paymentService.delete(id);
 
         Map<String, Boolean> response = new HashMap<>();
         response.put("deleted", Boolean.TRUE);

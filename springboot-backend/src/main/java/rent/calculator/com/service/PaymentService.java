@@ -20,13 +20,21 @@ import static java.util.stream.Collectors.toList;
 @RequiredArgsConstructor
 public class PaymentService {
     private final PaymentRepository paymentRepository;
+    //private final PaymentCreationService paymentCreationService;
     private final ModelMapper modelMapper;
 
-    public List<PaymentDTO> findAll() {
-        return paymentRepository.findAll().stream()
-                .map(payment -> modelMapper.map(payment, PaymentDTO.class))
-                .sorted(Comparator.comparing(PaymentDTO::getPaymentDate))
-                .collect(toList());
+    /*FIXME: Refactor*/
+
+    public PaymentDTO save(PaymentDTO paymentDTO) {
+        return null;//paymentCreationService.save(paymentDTO);
+    }
+
+    public PaymentDTO recalculate(PaymentDTO paymentDTO) {
+        return null;//paymentCreationService.recalculate(paymentDTO);
+    }
+
+    public void delete(Long id) {
+        //paymentCreationService.delete(id);
     }
 
     public PaymentDTO update(PaymentDTO paymentDTO) {
@@ -41,6 +49,13 @@ public class PaymentService {
             throw new IllegalArgumentException("Could not update payment because payment with ID: "
                     + paymentDTO.getId() + " does not exist.");
         }
+    }
+
+    public List<PaymentDTO> findAll() {
+        return paymentRepository.findAll().stream()
+                .map(payment -> modelMapper.map(payment, PaymentDTO.class))
+                .sorted(Comparator.comparing(PaymentDTO::getPaymentDate))
+                .collect(toList());
     }
 
     public Optional<PaymentDTO> findByIdAndMapToDTO(Long id) {
@@ -61,18 +76,15 @@ public class PaymentService {
 
     private Pair<LocalDate, LocalDate> getDateFromToForPreviousPayment(LocalDate paymentDate) {
         if (paymentDate.getMonth().getValue() == 1) {
-            LocalDate from = LocalDate.of(paymentDate.minusYears(1).getYear(),
-                    paymentDate.plusMonths(11).getMonth(), 1);
-            LocalDate to = LocalDate.of(paymentDate.minusYears(1).getYear(),
-                    paymentDate.plusMonths(11).getMonth(), paymentDate.minusMonths(1).lengthOfMonth());
+            LocalDate from = LocalDate.of(paymentDate.minusYears(1).getYear(), paymentDate.plusMonths(11).getMonth(), 1);
+            LocalDate to = LocalDate.of(paymentDate.minusYears(1).getYear(), paymentDate.plusMonths(11).getMonth(), paymentDate.minusMonths(1).lengthOfMonth());
 
             return Pair.of(from, to);
         }
 
-        LocalDate from = LocalDate.of(paymentDate.getYear(),
-                paymentDate.minusMonths(1).getMonth(), 1);
-        LocalDate to = LocalDate.of(paymentDate.getYear(),
-                paymentDate.minusMonths(1).getMonth(), paymentDate.minusMonths(1).lengthOfMonth());
+        LocalDate from = LocalDate.of(paymentDate.getYear(), paymentDate.minusMonths(1).getMonth(), 1);
+        LocalDate to = LocalDate.of(paymentDate.getYear(), paymentDate.minusMonths(1).getMonth(), paymentDate.minusMonths(1).lengthOfMonth());
+
         return Pair.of(from, to);
     }
 

@@ -1,13 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import {ConfigurationService} from './service/configuration-service';
+import {ConfigurationService} from './service/configuration.service';
 import {RentPrice} from '../model/rent-price';
 import {PaymentMessage} from '../model/payment-message';
 
 @Component({
   selector: 'app-configuration-component',
-  templateUrl: './configuration-component.html',
-  styleUrls: ['./configuration-component.css']
+  templateUrl: './configuration.component.html',
+  styleUrls: ['./configuration.component.css']
 })
 export class ConfigurationComponent implements OnInit {
 
@@ -21,8 +21,6 @@ export class ConfigurationComponent implements OnInit {
   ngOnInit(): void {
     this.configurationService.getPaymentMessage().subscribe(message => {
       this.paymentMessage = message;
-      console.log(message);
-      console.log(this.paymentMessage);
     });
 
     this.configurationService.getRentPrice().subscribe(rentPrice => {
@@ -32,13 +30,16 @@ export class ConfigurationComponent implements OnInit {
 
   backup(): void {
     this.configurationService.doBackup().subscribe(data => {
-        console.log(data);
         this.navigateToConfiguration();
       },
       error => console.log('Error occurred during backup: ' + error));
   }
 
   updateMessage(): void {
+    this.configurationService.updatePaymentMessage(this.paymentMessage.id, this.paymentMessage).subscribe( () => {
+        this.navigateToConfiguration();
+      }
+      , error => console.log('Could not update message ' + this.paymentMessage.id + '\n' + error));
   }
 
   updateRentPrice(): void {

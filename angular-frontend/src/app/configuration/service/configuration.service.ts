@@ -25,6 +25,14 @@ export class ConfigurationService {
     return this.httpClient.get<RentPrice>(`${this.baseURL}/prices`);
   }
 
+  updatePaymentMessage(id: number, paymentMessage: PaymentMessage): Observable<object> {
+    return this.httpClient.put(`${this.baseURL}/update/messages/${id}`, paymentMessage);
+  }
+
+  updatePrices(id: number, rentPrice: RentPrice): Observable<object> {
+    return this.httpClient.put(`${this.baseURL}/update/prices/${id}`, rentPrice);
+  }
+
   /*  addPayment(payment: Payment): Observable<object> {
       return this.httpClient.post(`${this.baseURL}/add`, payment);
     }

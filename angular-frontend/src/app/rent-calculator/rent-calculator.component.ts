@@ -5,8 +5,8 @@ import {PaymentService} from '../payments/payment-service';
 
 @Component({
   selector: 'app-payments',
-  templateUrl: './rent-calculator-component.html',
-  styleUrls: ['./rent-calculator-component.css']
+  templateUrl: './rent-calculator.component.html',
+  styleUrls: ['./rent-calculator.component.css']
 })
 export class RentCalculatorComponent implements OnInit {
 

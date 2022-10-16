@@ -3,6 +3,7 @@ package rent.calculator.com.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import rent.calculator.com.model.dto.PaymentDTO;
 import rent.calculator.com.model.dto.PaymentMessageDTO;
 import rent.calculator.com.model.dto.RentPriceDTO;
 import rent.calculator.com.service.PaymentMessageService;
@@ -20,9 +21,7 @@ public class ConfigurationController {
 
     /*
     TODO:
-        1: replace static Java messages with database messages
-        2: onConfiguration show all messages and prices with possibility to edit
-        3: restore backup from file
+        1: restore backup from file
      */
 
     @GetMapping
@@ -40,11 +39,20 @@ public class ConfigurationController {
         return rentPriceService.getActual();
     }
 
-    @PutMapping("/update/messages")
-    public void updateMessages() {
+    /*
+    *     @PutMapping("/payments/update/{id}")
+    public ResponseEntity<PaymentDTO> update(@PathVariable Long id, @RequestBody PaymentDTO paymentDTO) {
+        PaymentDTO updated = paymentService.update(paymentDTO);
+        return ok(updated);
+    }*/
+
+    @PutMapping("/update/messages/{id}")
+    public ResponseEntity<PaymentMessageDTO> updateMessages(@PathVariable Long id, @RequestBody PaymentMessageDTO paymentMessageDTO) {
+        PaymentMessageDTO updated = paymentMessageService.update(paymentMessageDTO);
+        return ok(updated);
     }
 
-    @PutMapping("/update/prices")
+    @PutMapping("/update/prices/{id}")
     public void updatePrices() {
     }
 

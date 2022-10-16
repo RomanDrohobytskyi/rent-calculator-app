@@ -1,0 +1,11 @@
+.table {
+  text-align: center;
+}
+
+.btn {
+  margin: 10px;
+}
+
+.inline {
+  display: flex;
+}

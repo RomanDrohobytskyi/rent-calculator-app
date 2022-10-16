@@ -37,5 +37,6 @@ public class PaymentMessage extends BaseEntity {
     @Nationalized
     @Column(columnDefinition = "TEXT")
     private String regards;
+    private int version;
     private boolean actual;
 }

@@ -27,10 +27,9 @@ public class PaymentMessageCreationService {
 
         String month = getMonth(payment);
 
-        PaymentDTO previousPayment = paymentService.findPrevious(payment)
-                .orElseThrow(IllegalArgumentException::new);
-
-        return createMessage(payment, month, previousPayment);
+        return paymentService.findPrevious(payment)
+                .map(previousPayment -> createMessage(payment, month, previousPayment))
+                .orElseGet(() -> createMessage(payment, month, payment));
     }
 
     private String createMessage(PaymentDTO payment, String month, PaymentDTO previousPayment) {
@@ -45,7 +44,7 @@ public class PaymentMessageCreationService {
     }
 
     private String formatMedia(PaymentDTO payment) {
-        return String.format(message.getTotalMedia(), sumMediaAndFormat(payment, price));
+        return String.format(message.getTotalMedia(), sumMediaAndFormat(payment));
     }
 
     private String formatTotal(PaymentDTO payment) {
@@ -63,19 +62,19 @@ public class PaymentMessageCreationService {
     private String formatWater(PaymentDTO payment, PaymentDTO previousPayment, PaymentMessageDTO message) {
         return String.format(message.getWater(), format(payment.getWater()),
                 format(previousPayment.getWater()),
-                format(payment.getWater().subtract(previousPayment.getWater())));
+                format(payment.getWaterBill()));
     }
 
     private String formatGas(PaymentDTO payment, PaymentDTO previousPayment, PaymentMessageDTO message) {
         return String.format(message.getGas(), format(payment.getGas()),
                 format(previousPayment.getGas()),
-                format(payment.getGas().subtract(previousPayment.getGas())));
+                format(payment.getGasBill()));
     }
 
     private String formatElectricity(PaymentDTO payment, PaymentDTO previousPayment, PaymentMessageDTO message) {
         return String.format(message.getElectricity(), format(payment.getElectricity()),
                     format(previousPayment.getElectricity()),
-                    format(payment.getElectricity().subtract(previousPayment.getElectricity())));
+                    format(payment.getElectricityBill()));
     }
 
 }

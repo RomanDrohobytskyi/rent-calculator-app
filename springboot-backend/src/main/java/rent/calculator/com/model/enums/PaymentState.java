@@ -1,4 +1,4 @@
-package rent.calculator.com.model.payment.state;
+package rent.calculator.com.model.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

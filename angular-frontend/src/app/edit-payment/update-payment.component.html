@@ -1,51 +1,53 @@
 <div class="col-md-6 offset-md-3">
     <h3 class="text-center">Update payment</h3>
-    <form (ngSubmit) = "onSubmit()">
-
-      <td> {{ payment.water }} </td>
-      <td> {{ payment.electricity }} </td>
-      <td> {{ payment.gas }} </td>
-      <td> {{ payment.total }} </td>
-      <td> {{ payment.paymentDate }} </td>
-      <td> {{ payment.creationDate }} </td>
+    <form (ngSubmit) = "updatePayment()">
 
         <div class="form-group">
-            <label></label>
+            <label>Water</label>
             <input type="text" class="form-control" id="water"
                 [(ngModel)]="payment.water" name="water">
         </div>
 
         <div class="form-group">
-            <label></label>
+            <label>Electricity</label>
             <input type="text" class="form-control" id="electricity"
                 [(ngModel)]="payment.electricity" name="electricity">
         </div>
 
         <div class="form-group">
-            <label></label>
+            <label>Gas</label>
             <input type="text" class="form-control" id="gas"
                 [(ngModel)]="payment.gas" name="gas">
         </div>
 
         <div class="form-group">
-            <label></label>
+            <label>Total</label>
             <input type="text" class="form-control" id="total"
                 [(ngModel)]="payment.total" name="total">
         </div>
 
         <div class="form-group">
-            <label></label>
+            <label>Payment date</label>
             <input type="text" class="form-control" id="paymentDate"
                 [(ngModel)]="payment.paymentDate" name="paymentDate">
         </div>
 
         <div class="form-group">
-            <label></label>
+            <label>Message</label>
             <input type="text" class="form-control" id="emailMessage"
                 [(ngModel)]="payment.emailMessage" name="emailMessage">
         </div>
 
-        <button class="btn btn-success" type="submit">Submit</button>
+        <div class="form-group">
+            <label>Creation date</label> {{payment.creationDate}}
+        </div>
 
+        <div class="col-md-6 offset-md-3">
+          <button class="btn btn-success" type="submit">Update</button>
+        </div>
+
+        <div class="col-md-6 offset-md-3">
+          <button (click)="recalculate()" class="btn btn-info">Recalculate</button>
+        </div>
     </form>
 </div>

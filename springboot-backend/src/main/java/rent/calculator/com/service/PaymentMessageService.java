@@ -5,6 +5,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import rent.calculator.com.model.dto.PaymentDTO;
 import rent.calculator.com.model.dto.PaymentMessageDTO;
+import rent.calculator.com.model.entity.Payment;
 import rent.calculator.com.model.entity.PaymentMessage;
 import rent.calculator.com.repository.PaymentMessageRepository;
 
@@ -24,5 +25,14 @@ public class PaymentMessageService {
     public PaymentMessageDTO getActual() {
         PaymentMessage paymentMessage = paymentMessageRepository.getByActual(true);
         return modelMapper.map(paymentMessage, PaymentMessageDTO.class);
+    }
+
+    public PaymentMessageDTO update(PaymentMessageDTO paymentMessageDTO) {
+        PaymentMessage paymentMessage = paymentMessageRepository.getByIdAndActual(paymentMessageDTO.getId(), true);
+        PaymentMessage updated = modelMapper.map(paymentMessageDTO, PaymentMessage.class);
+        modelMapper.map(paymentMessageDTO, paymentMessage);
+        updated.setId(paymentMessage.getId());
+        updated = paymentMessageRepository.save(updated);
+        return modelMapper.map(updated, PaymentMessageDTO.class);
     }
 }

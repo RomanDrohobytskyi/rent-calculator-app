@@ -16,17 +16,17 @@
     <tbody>
         <tr *ngFor="let payment of payments">
             <td>{{ payment.id }}</td>
-            <td>{{ payment.water }}</td>
-            <td>{{ payment.electricity }}</td>
-            <td>{{ payment.gas }}</td>
+            <td>{{ payment.water }} ({{ payment.waterQuantity }})</td>
+            <td>{{ payment.electricity }} ({{ payment.electricityQuantity }})</td>
+            <td>{{ payment.gas }} ({{ payment.gasQuantity }})</td>
             <td>{{ payment.total }}</td>
             <td>{{ payment.paymentDate }}</td>
             <td>{{ payment.creationDate }}</td>
             <td>{{ payment.modificationDate }}</td>
-            <td>
-                <button (click)="updatePayment(payment.id)" class="btn btn-info">Update</button>
-                <button (click)="archivePayment(payment.id)" class="btn btn-danger" style="margin-left:10px">Delete</button>
-                <button (click)="paymentDetails(payment.id)" class="btn btn-info" style="margin-left:10px">View</button>
+            <td class="inline">
+              <button (click)="paymentDetails(payment.id)" class="btn btn-info">View</button>
+              <button (click)="updatePayment(payment.id)" class="btn btn-info">Update</button>
+              <button (click)="archivePayment(payment.id)" class="btn btn-danger">Delete</button>
             </td>
         </tr>
     </tbody>

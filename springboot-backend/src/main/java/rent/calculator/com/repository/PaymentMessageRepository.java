@@ -7,4 +7,5 @@ import rent.calculator.com.model.entity.PaymentMessage;
 @Repository
 public interface PaymentMessageRepository extends CrudRepository<PaymentMessage, Long> {
     PaymentMessage getByActual(boolean actual);
+    PaymentMessage getByIdAndActual(long id, boolean actual);
 }

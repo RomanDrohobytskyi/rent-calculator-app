@@ -2,7 +2,7 @@ package rent.calculator.com.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
-import rent.calculator.com.model.payment.state.PaymentState;
+import rent.calculator.com.model.enums.PaymentState;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -15,10 +15,16 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class PaymentDTO {
     private Long id;
-    private BigDecimal total;
     private BigDecimal gas;
+    private BigDecimal gasQuantity;
+    private BigDecimal gasBill;
     private BigDecimal water;
+    private BigDecimal waterQuantity;
+    private BigDecimal waterBill;
     private BigDecimal electricity;
+    private BigDecimal electricityQuantity;
+    private BigDecimal electricityBill;
+    private BigDecimal total;
     private LocalDateTime creationDate;
     private LocalDateTime modificationDate;
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")

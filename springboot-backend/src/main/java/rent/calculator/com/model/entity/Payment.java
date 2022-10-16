@@ -2,7 +2,7 @@ package rent.calculator.com.model.entity;
 
 import lombok.*;
 import org.hibernate.annotations.Nationalized;
-import rent.calculator.com.model.payment.state.PaymentState;
+import rent.calculator.com.model.enums.PaymentState;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,9 +18,15 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class Payment extends BaseEntity {
     private BigDecimal gas;
+    private BigDecimal gasQuantity;
+    private BigDecimal gasBill;
     private BigDecimal water;
-    private BigDecimal total;
+    private BigDecimal waterQuantity;
+    private BigDecimal waterBill;
     private BigDecimal electricity;
+    private BigDecimal electricityQuantity;
+    private BigDecimal electricityBill;
+    private BigDecimal total;
     private LocalDateTime creationDate;
     private LocalDateTime modificationDate;
     private LocalDate paymentDate;

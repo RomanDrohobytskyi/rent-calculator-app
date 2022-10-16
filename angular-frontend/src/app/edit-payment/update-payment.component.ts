@@ -5,8 +5,8 @@ import {PaymentService} from '../payments/payment-service';
 
 @Component({
   selector: 'app-update-employee',
-  templateUrl: './update-payment-component.html',
-  styleUrls: ['./update-payment-component.css']
+  templateUrl: './update-payment.component.html',
+  styleUrls: ['./update-payment.component.css']
 })
 export class UpdatePaymentComponent implements OnInit {
 
@@ -25,8 +25,15 @@ export class UpdatePaymentComponent implements OnInit {
     }, error => console.log(error));
   }
 
-  onSubmit(): void {
+  updatePayment(): void {
     this.paymentService.updatePayment(this.id, this.payment).subscribe( () => {
+        this.goToPayments();
+      }
+      , error => console.log(error));
+  }
+
+  recalculate(): void {
+    this.paymentService.recalculate(this.payment).subscribe( () => {
         this.goToPayments();
       }
       , error => console.log(error));
