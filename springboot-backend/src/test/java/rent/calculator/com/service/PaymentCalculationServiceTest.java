@@ -1,4 +1,4 @@
-package mock;
+package rent.calculator.com.service;
 
 import org.junit.Before;
 import org.junit.jupiter.api.Test;
@@ -8,19 +8,16 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import rent.calculator.com.model.dto.PaymentDTO;
-import rent.calculator.com.model.dto.RentPriceDTO;
-import rent.calculator.com.service.PaymentCalculationService;
-import rent.calculator.com.service.PaymentService;
-import rent.calculator.com.service.RentPriceService;
 
 import java.math.BigDecimal;
 import java.util.Optional;
 
+import static mock.MockPayments.*;
+import static mock.MockPrices.mockActualRentPrice;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
-import static rent.calculator.com.model.dto.PaymentDTO.builder;
 
 @ExtendWith(MockitoExtension.class)
 public class PaymentCalculationServiceTest {
@@ -85,38 +82,6 @@ public class PaymentCalculationServiceTest {
         assertEquals(actualPayment.getGasQuantity(), BigDecimal.valueOf(11.67));
     }
 
-    private PaymentDTO mockActualPayment() {
-        return builder()
-                .water(BigDecimal.valueOf(1081.08))
-                .electricity(BigDecimal.valueOf(427.5))
-                .gas(BigDecimal.valueOf(775.7))
-                .build();
-    }
 
-    private PaymentDTO mockPreviousPayment() {
-        return builder()
-                .water(BigDecimal.valueOf(1077.11))
-                .electricity(BigDecimal.valueOf(373.5))
-                .gas(BigDecimal.valueOf(768.64))
-                .build();
-    }
-
-    private PaymentDTO mockPreviousPreviousPayment() {
-        return builder()
-                .water(BigDecimal.valueOf(1070.58))
-                .electricity(BigDecimal.valueOf(284.4))
-                .gas(BigDecimal.valueOf(756.97))
-                .build();
-    }
-
-    private RentPriceDTO mockActualRentPrice() {
-        return RentPriceDTO.builder()
-                .actual(true)
-                .electricity(BigDecimal.valueOf(1.02))
-                .gas(BigDecimal.valueOf(7.46))
-                .water(BigDecimal.valueOf(28.13))
-                .rent(BigDecimal.valueOf(1800.00))
-                .build();
-    }
 
 }

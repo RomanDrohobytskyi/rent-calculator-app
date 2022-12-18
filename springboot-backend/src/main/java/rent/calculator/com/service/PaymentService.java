@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static java.time.LocalDateTime.now;
+import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.toList;
 
 @Service
@@ -38,23 +39,27 @@ public class PaymentService {
     }
 
     public PaymentDTO update(PaymentDTO paymentDTO) {
-        Optional<Payment> optionalPayment = findById(paymentDTO.getId());
-        if(optionalPayment.isPresent()) {
-            Payment payment = optionalPayment.get();
-            modelMapper.map(paymentDTO, optionalPayment);
+        return findById(paymentDTO.getId())
+                .map(payment -> update(paymentDTO, payment))
+                .orElseThrow(() -> new IllegalArgumentException("Could not update payment because payment with ID: "
+                        + paymentDTO.getId() + " does not exist."));
+    }
+
+    public Optional<Payment> findById(Long id) {
+        return paymentRepository.findById(id);
+    }
+
+    private PaymentDTO update(PaymentDTO paymentDTO, Payment payment) {
+            modelMapper.map(paymentDTO, payment);
             payment.setModificationDate(now());
             payment = paymentRepository.save(payment);
             return modelMapper.map(payment, PaymentDTO.class);
-        } else {
-            throw new IllegalArgumentException("Could not update payment because payment with ID: "
-                    + paymentDTO.getId() + " does not exist.");
-        }
     }
 
     public List<PaymentDTO> findAll() {
         return paymentRepository.findAll().stream()
                 .map(payment -> modelMapper.map(payment, PaymentDTO.class))
-                .sorted(Comparator.comparing(PaymentDTO::getPaymentDate))
+                .sorted(comparing(PaymentDTO::getPaymentDate))
                 .collect(toList());
     }
 
@@ -62,10 +67,6 @@ public class PaymentService {
         return paymentRepository.findById(id)
                 .map(payment -> modelMapper.map(payment, PaymentDTO.class));
                 //.orElseThrow(() -> new IllegalArgumentException("No payment found with id: " + id));
-    }
-
-    public Optional<Payment> findById(Long id) {
-        return paymentRepository.findById(id);
     }
 
     public Optional<PaymentDTO> findPrevious(PaymentDTO paymentDTO) {

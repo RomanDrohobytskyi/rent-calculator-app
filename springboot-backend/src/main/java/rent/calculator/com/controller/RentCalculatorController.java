@@ -30,7 +30,7 @@ public class RentCalculatorController {
 *  */
 
     @GetMapping("/payments")
-    public List<PaymentDTO> rentCalculator() {
+    public List<PaymentDTO> payments() {
         return paymentService.findAll();
     }
 
