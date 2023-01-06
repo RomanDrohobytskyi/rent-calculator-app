@@ -13,8 +13,11 @@ public class MockPayments {
     public static PaymentDTO mockActualPayment() {
         return builder()
                 .water(BigDecimal.valueOf(1081.08))
+                .waterBill(BigDecimal.valueOf(111.68))
                 .electricity(BigDecimal.valueOf(427.5))
+                .electricityBill(BigDecimal.valueOf(65.08))
                 .gas(BigDecimal.valueOf(775.7))
+                .gasBill(BigDecimal.valueOf(62.70))
                 .paymentDate(LocalDate.now())
                 .creationDate(LocalDateTime.now())
                 .build();
