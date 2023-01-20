@@ -81,7 +81,4 @@ public class PaymentCalculationServiceTest {
         assertEquals(actualPayment.getGasBill(), BigDecimal.valueOf(87.06));
         assertEquals(actualPayment.getGasQuantity(), BigDecimal.valueOf(11.67));
     }
-
-
-
 }

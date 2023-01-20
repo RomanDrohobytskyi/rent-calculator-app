@@ -9,5 +9,5 @@ public enum PaymentState {
     NEW (1),
     ARCHIVE (-1);
 
-    private int stateId;
+    private final int stateId;
 }

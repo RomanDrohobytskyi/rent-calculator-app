@@ -2,16 +2,13 @@ package rent.calculator.com.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import rent.calculator.com.model.dto.PaymentDTO;
 import rent.calculator.com.model.entity.Payment;
 import rent.calculator.com.repository.PaymentRepository;
 
-import static java.lang.String.valueOf;
 import static java.time.LocalDateTime.now;
-import static org.apache.commons.lang3.StringUtils.defaultString;
 
 @Slf4j
 @Service

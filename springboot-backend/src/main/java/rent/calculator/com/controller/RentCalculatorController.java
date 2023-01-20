@@ -20,7 +20,6 @@ import static org.springframework.http.ResponseEntity.ok;
 @RequiredArgsConstructor
 public class RentCalculatorController {
     private final PaymentService paymentService;
-    private final PaymentCreationService paymentCreationService;
 
 /*TODO
 *  main controller
@@ -32,11 +31,6 @@ public class RentCalculatorController {
     @GetMapping("/payments")
     public List<PaymentDTO> payments() {
         return paymentService.findAll();
-    }
-
-    @PostMapping("/payments/add")
-    public PaymentDTO add(@RequestBody PaymentDTO paymentDTO) {
-        return paymentCreationService.save(paymentDTO);
     }
 
     @GetMapping("/payments/details/{id}")

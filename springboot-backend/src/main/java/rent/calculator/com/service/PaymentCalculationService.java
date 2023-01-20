@@ -8,8 +8,6 @@ import rent.calculator.com.model.dto.RentPriceDTO;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-import static rent.calculator.com.utils.FormattingUtils.format;
-
 @Service
 @RequiredArgsConstructor
 public class PaymentCalculationService {
@@ -39,26 +37,4 @@ public class PaymentCalculationService {
     private BigDecimal multiplyAndScale(BigDecimal a, BigDecimal b) {
         return a.multiply(b).setScale(2, RoundingMode.HALF_UP);
     }
-
-    public static String sumMediaAndFormat(PaymentDTO payment) {
-        BigDecimal sum = sumMedia(payment);
-        return format(sum);
-    }
-
-    public static String getTotal(PaymentDTO paymentDTO, RentPriceDTO price) {
-        BigDecimal total = sumMedia(paymentDTO).add(price.getRent());
-        return format(total);
-    }
-
-    public static BigDecimal sumMedia(PaymentDTO payment) {
-        return payment.getGasBill()
-                .add(payment.getElectricityBill())
-                .add(payment.getWaterBill());
-    }
-
-/*    private static String format() {
-        double d = 2.34568;
-        DecimalFormat f = new DecimalFormat("##.00");
-        return f.format(d);
-    }*/
 }

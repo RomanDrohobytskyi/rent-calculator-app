@@ -9,7 +9,6 @@ import rent.calculator.com.model.entity.Payment;
 import rent.calculator.com.repository.PaymentRepository;
 
 import java.time.LocalDate;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
