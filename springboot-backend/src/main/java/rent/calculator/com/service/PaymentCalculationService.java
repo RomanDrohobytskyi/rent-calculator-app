@@ -8,8 +8,6 @@ import rent.calculator.com.model.dto.RentPriceDTO;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-import static rent.calculator.com.utils.FormattingUtils.format;
-
 @Service
 @RequiredArgsConstructor
 public class PaymentCalculationService {

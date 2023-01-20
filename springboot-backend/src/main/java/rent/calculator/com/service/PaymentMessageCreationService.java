@@ -3,7 +3,7 @@ package rent.calculator.com.service;
 import org.springframework.stereotype.Service;
 import rent.calculator.com.model.dto.PaymentDTO;
 
-import static rent.calculator.com.utils.CommonUtils.getMonth;
+import static rent.calculator.com.utils.DateUtils.currentMonth;
 
 @Service
 public class PaymentMessageCreationService {
@@ -16,7 +16,7 @@ public class PaymentMessageCreationService {
     }
 
     public String createMessage(PaymentDTO payment) {
-        String month = getMonth(payment);
+        String month = currentMonth(payment);
 
         return paymentService.findPrevious(payment)
                 .map(previousPayment -> createMessage(payment, month, previousPayment))

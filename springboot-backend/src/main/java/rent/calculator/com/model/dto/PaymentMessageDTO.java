@@ -1,11 +1,6 @@
 package rent.calculator.com.model.dto;
 
 import lombok.*;
-import org.hibernate.annotations.Nationalized;
-import rent.calculator.com.model.entity.BaseEntity;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
 
 @Getter
 @Setter
