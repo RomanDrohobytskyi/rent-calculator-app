@@ -28,19 +28,19 @@
 
     <div class="form-group">
       <label>Water</label>
-      <input type="text" class="form-control" id="water"
+      <input type="text" class="form-control" id="water-message"
              [(ngModel)]="paymentMessage.water" name="water">
     </div>
 
     <div class="form-group">
       <label>Electricity</label>
-      <input type="text" class="form-control" id="electricity"
+      <input type="text" class="form-control" id="electricity-message"
              [(ngModel)]="paymentMessage.electricity" name="electricity">
     </div>
 
     <div class="form-group">
       <label>Gas</label>
-      <input type="text" class="form-control" id="gas"
+      <input type="text" class="form-control" id="gas-message"
              [(ngModel)]="paymentMessage.gas" name="gas">
     </div>
 
@@ -58,5 +58,32 @@
 
     <button class="btn btn-success" type="submit">Update</button>
 
+  <form (ngSubmit)="updateRentPrice()">
+    <div class="form-group">
+      <label>Rent</label>
+      <input type="number" class="form-control" id="rent"
+             [(ngModel)]="rentPrice.rent" name="rent">
+    </div>
+
+    <div class="form-group">
+      <label>Electricity</label>
+      <input type="number" class="form-control" id="electricity"
+             [(ngModel)]="rentPrice.electricity" name="electricity">
+    </div>
+
+    <div class="form-group">
+      <label>Gas</label>
+      <input type="number" class="form-control" id="gas"
+             [(ngModel)]="rentPrice.gas" name="gas">
+    </div>
+
+    <div class="form-group">
+      <label>Water</label>
+      <input type="number" class="form-control" id="water"
+             [(ngModel)]="rentPrice.water" name="water">
+    </div>
+
+    <button class="btn btn-success" type="submit">Update</button>
   </form>
+
 </div>

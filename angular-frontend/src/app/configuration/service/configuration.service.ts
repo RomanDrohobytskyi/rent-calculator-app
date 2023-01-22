@@ -21,16 +21,20 @@ export class ConfigurationService {
     return this.httpClient.get<PaymentMessage>(`${this.baseURL}/messages`);
   }
 
-  getRentPrice(): Observable<RentPrice> {
-    return this.httpClient.get<RentPrice>(`${this.baseURL}/prices`);
+  getActualRentPrice(): Observable<RentPrice> {
+    return this.httpClient.get<RentPrice>(`${this.baseURL}/price`);
   }
+  /*
+  getArchivalRentPrices(): Observable<RentPrice> {
+    return this.httpClient.get<RentPrice>(`${this.baseURL}/price/archival`);
+  }*/
 
   updatePaymentMessage(id: number, paymentMessage: PaymentMessage): Observable<object> {
     return this.httpClient.put(`${this.baseURL}/update/messages/${id}`, paymentMessage);
   }
 
-  updatePrices(id: number, rentPrice: RentPrice): Observable<object> {
-    return this.httpClient.put(`${this.baseURL}/update/prices/${id}`, rentPrice);
+  updatePrice(rentPrice: RentPrice): Observable<object> {
+    return this.httpClient.put(`${this.baseURL}/price/update`, rentPrice);
   }
 
   /*  addPayment(payment: Payment): Observable<object> {

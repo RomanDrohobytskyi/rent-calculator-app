@@ -13,10 +13,14 @@ import static rent.calculator.com.utils.FormattingUtils.format;
 
 /*TODO refactor to decorator*/
 @Service
-@RequiredArgsConstructor
 public class PaymentMessageFormatter {
     private final RentPriceDTO price;
     private final PaymentMessageDTO message;
+
+    public PaymentMessageFormatter(RentPriceService rentPriceService, PaymentMessageService paymentMessageService) {
+        this.price = rentPriceService.getActual();
+        this.message = paymentMessageService.getActual();
+    }
 
     public String formatMedia(PaymentDTO payment) {
         return String.format(message.getTotalMedia(), sumMediaAndFormat(payment));

@@ -10,6 +10,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RentPriceDTO {
+    private Long id;
     private BigDecimal gas;
     private BigDecimal water;
     private BigDecimal electricity;

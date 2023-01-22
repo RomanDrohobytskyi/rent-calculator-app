@@ -15,7 +15,9 @@ public class PaymentMessageService {
 
     public PaymentMessageDTO getActual() {
         PaymentMessage paymentMessage = paymentMessageRepository.getByActual(true);
-        return modelMapper.map(paymentMessage, PaymentMessageDTO.class);
+        return paymentMessage != null
+                ? modelMapper.map(paymentMessage, PaymentMessageDTO.class)
+                : null;
     }
 
     public PaymentMessageDTO update(PaymentMessageDTO paymentMessageDTO) {

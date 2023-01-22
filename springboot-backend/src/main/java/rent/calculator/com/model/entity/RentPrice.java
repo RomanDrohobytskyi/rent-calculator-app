@@ -17,4 +17,9 @@ public class RentPrice extends BaseEntity {
     private BigDecimal electricity;
     private BigDecimal rent;
     private boolean actual;
+
+    public RentPrice deactivate() {
+        this.actual = false;
+        return this;
+    }
 }

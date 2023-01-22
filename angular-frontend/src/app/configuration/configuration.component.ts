@@ -23,13 +23,13 @@ export class ConfigurationComponent implements OnInit {
       this.paymentMessage = message;
     });
 
-    this.configurationService.getRentPrice().subscribe(rentPrice => {
+    this.configurationService.getActualRentPrice().subscribe(rentPrice => {
       this.rentPrice = rentPrice;
     });
   }
 
   backup(): void {
-    this.configurationService.doBackup().subscribe(data => {
+    this.configurationService.doBackup().subscribe(() => {
         this.navigateToConfiguration();
       },
       error => console.log('Error occurred during backup: ' + error));
@@ -43,6 +43,10 @@ export class ConfigurationComponent implements OnInit {
   }
 
   updateRentPrice(): void {
+    this.configurationService.updatePrice(this.rentPrice).subscribe( () => {
+        this.navigateToConfiguration();
+      }
+      , error => console.log('Could not update rent price ' + this.rentPrice.id + '\n' + error));
   }
 
   navigateToConfiguration(): void {

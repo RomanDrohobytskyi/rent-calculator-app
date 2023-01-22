@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import rent.calculator.com.model.dto.PaymentDTO;
 
@@ -16,6 +15,7 @@ import static mock.MockPayments.mockPreviousPayment;
 import static mock.MockPrices.mockActualRentPrice;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
+import static org.mockito.MockitoAnnotations.initMocks;
 
 @ExtendWith(MockitoExtension.class)
 public class PaymentMessageCreationServiceTest {
@@ -32,7 +32,7 @@ public class PaymentMessageCreationServiceTest {
 
     @Before
      public void init() {
-        MockitoAnnotations.initMocks(this);
+        initMocks(this);
         //messageFormatter = new PaymentMessageFormatter(rentPriceService, paymentMessageService);
     }
 
@@ -45,8 +45,8 @@ public class PaymentMessageCreationServiceTest {
         when(rentPriceService.getActual()).thenReturn(mockActualRentPrice());
         when(paymentMessageService.getActual()).thenReturn(mockPaymentMessage());
 
-        messageFormatter = new PaymentMessageFormatter(rentPriceService.getActual(), paymentMessageService.getActual());
-        this.paymentMessageCreationService = new PaymentMessageCreationService(paymentService, rentPriceService, paymentMessageService);
+        //messageFormatter = new PaymentMessageFormatter(rentPriceService.getActual(), paymentMessageService.getActual());
+        //this.paymentMessageCreationService = new PaymentMessageCreationService(paymentService, rentPriceService, paymentMessageService);
 
 
         //when

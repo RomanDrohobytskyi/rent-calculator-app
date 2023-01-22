@@ -9,6 +9,7 @@ import {RentCalculatorComponent} from './rent-calculator/rent-calculator.compone
 import {PaymentDetailsComponent} from './payment-details/payment-details.component';
 import {UpdatePaymentComponent} from './edit-payment/update-payment.component';
 import {ConfigurationComponent} from './configuration/configuration.component';
+import {MaterialModule} from './material/material.module';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import {ConfigurationComponent} from './configuration/configuration.component';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    MaterialModule
   ],
   providers: [],
   bootstrap: [AppComponent]

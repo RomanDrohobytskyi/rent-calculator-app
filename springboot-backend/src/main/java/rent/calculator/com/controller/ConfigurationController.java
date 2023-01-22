@@ -15,7 +15,6 @@ import static org.springframework.http.ResponseEntity.ok;
 @RequestMapping("/rent/calculator/configuration/")
 @RequiredArgsConstructor
 public class ConfigurationController {
-    private final RentPriceService rentPriceService;
     private final PaymentMessageService paymentMessageService;
 
     /*
@@ -33,11 +32,6 @@ public class ConfigurationController {
         return paymentMessageService.getActual();
     }
 
-    @GetMapping("/prices")
-    public RentPriceDTO getPrices() {
-        return rentPriceService.getActual();
-    }
-
     /*
     *     @PutMapping("/payments/update/{id}")
     public ResponseEntity<PaymentDTO> update(@PathVariable Long id, @RequestBody PaymentDTO paymentDTO) {
@@ -49,10 +43,6 @@ public class ConfigurationController {
     public ResponseEntity<PaymentMessageDTO> updateMessages(@PathVariable Long id, @RequestBody PaymentMessageDTO paymentMessageDTO) {
         PaymentMessageDTO updated = paymentMessageService.update(paymentMessageDTO);
         return ok(updated);
-    }
-
-    @PutMapping("/update/prices/{id}")
-    public void updatePrices() {
     }
 
     @PutMapping("/restore/backup")
