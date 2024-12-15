@@ -22,6 +22,11 @@ public class PaymentMessageFormatter {
         this.message = paymentMessageService.getActual();
     }
 
+    public PaymentMessageFormatter(RentPriceDTO actual, PaymentMessageDTO actual1) {
+        this.price = actual;
+        this.message = actual1;
+    }
+
     public String formatMedia(PaymentDTO payment) {
         return String.format(message.getTotalMedia(), sumMediaAndFormat(payment));
     }
