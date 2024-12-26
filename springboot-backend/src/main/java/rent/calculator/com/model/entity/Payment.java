@@ -5,6 +5,7 @@ import org.hibernate.annotations.Nationalized;
 import rent.calculator.com.model.enums.PaymentState;
 
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -17,7 +18,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Payment extends BaseEntity {
-    private BigDecimal gas;
+/*    private BigDecimal gas;
     private BigDecimal gasQuantity;
     private BigDecimal gasBill;
     private BigDecimal water;
@@ -25,7 +26,13 @@ public class Payment extends BaseEntity {
     private BigDecimal waterBill;
     private BigDecimal electricity;
     private BigDecimal electricityQuantity;
-    private BigDecimal electricityBill;
+    private BigDecimal electricityBill;*/
+    @Embedded
+    private Gas gas;
+    @Embedded
+    private Water water;
+    @Embedded
+    private Electricity electricity;
     private BigDecimal total;
     private LocalDateTime creationDate;
     private LocalDateTime modificationDate;

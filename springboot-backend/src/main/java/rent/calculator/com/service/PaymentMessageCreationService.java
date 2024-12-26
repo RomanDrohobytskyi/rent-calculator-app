@@ -1,43 +1,40 @@
 package rent.calculator.com.service;
 
-import org.apache.commons.lang3.StringUtils;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import rent.calculator.com.model.dto.PaymentDTO;
 
-import java.util.Objects;
-
-import static rent.calculator.com.utils.DateUtils.currentMonth;
+import static rent.calculator.com.utils.DateUtils.getStringRepresentationOfPaymentMonth;
 
 @Service
+@RequiredArgsConstructor
 public class PaymentMessageCreationService {
-    private final PaymentMessageFormatter messageFormatter;
     private final PaymentService paymentService;
-
-    public PaymentMessageCreationService(PaymentService paymentService, RentPriceService rentPriceService, PaymentMessageService paymentMessageService) {
-        this.paymentService = paymentService;
-        this.messageFormatter = new PaymentMessageFormatter(rentPriceService.getActual(), paymentMessageService.getActual());
-    }
+    private final PaymentMessageService paymentMessageService;
+    private final RentPriceService rentPriceService;
 
     public String createMessage(PaymentDTO payment) {
-        if (Objects.isNull(payment)) {
-            return StringUtils.EMPTY;
-        }
+        String month = getStringRepresentationOfPaymentMonth(payment);
 
-        String month = currentMonth(payment);
         return paymentService.findPrevious(payment)
                 .map(previousPayment -> createMessage(payment, month, previousPayment))
                 .orElseGet(() -> createMessage(payment, month, payment));
     }
 
     private String createMessage(PaymentDTO payment, String month, PaymentDTO previousPayment) {
-        return messageFormatter.formatTitle(month) + "\n"
-                + messageFormatter.formatDescription(month) + "\n"
-                + messageFormatter.formatMedia(payment) + "\n"
-                + messageFormatter.formatWater(payment, previousPayment) + "\n"
-                + messageFormatter.formatGas(payment, previousPayment) + "\n"
-                + messageFormatter.formatElectricity(payment, previousPayment) + "\n"
-                + messageFormatter.formatTotal(payment) + "\n"
-                + messageFormatter.formatRegards();
+        PaymentMessageFormatter messageFormatter = new PaymentMessageFormatter(
+                rentPriceService.getActual(), paymentMessageService.getActual());
+
+        return messageFormatter
+                .formatTitle(month)
+                .formatDescription(month)
+                .formatMedia(payment)
+                .formatWater(payment, previousPayment)
+                .formatGas(payment, previousPayment)
+                .formatElectricity(payment, previousPayment)
+                .formatTotal(payment)
+                .formatRegards()
+                .build();
     }
 
 }
