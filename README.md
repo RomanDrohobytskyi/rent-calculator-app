@@ -17,6 +17,11 @@ After it, the front-end can be started using next command:
 ng serve --port 4200
 </br>
 
+```bash
+cd ./angular-frontend/
+ng serve --port 4200
+```
+
 ### Back-end
 To run a back-end part run Application.java file.
 
