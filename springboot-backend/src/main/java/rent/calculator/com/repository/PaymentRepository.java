@@ -11,5 +11,5 @@ import java.util.Set;
 @Repository
 public interface PaymentRepository extends CrudRepository<Payment, Long> {
     Set<Payment> findAll();
-    Optional<Payment> findByPaymentDateAfterAndPaymentDateBefore(LocalDate after, LocalDate before);
+    Optional<Payment> findByPaymentDateBetween(LocalDate from, LocalDate to);
 }

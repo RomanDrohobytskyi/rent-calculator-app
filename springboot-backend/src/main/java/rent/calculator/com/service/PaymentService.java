@@ -70,7 +70,7 @@ public class PaymentService {
 
     public Optional<PaymentDTO> findPrevious(PaymentDTO paymentDTO) {
         Pair<LocalDate, LocalDate> fromTo = getDateFromToForPreviousPayment(paymentDTO.getPaymentDate());
-        return paymentRepository.findByPaymentDateAfterAndPaymentDateBefore(fromTo.getFirst(), fromTo.getSecond())
+        return paymentRepository.findByPaymentDateBetween(fromTo.getFirst(), fromTo.getSecond())
                 .map(payment -> modelMapper.map(payment, PaymentDTO.class));
     }
 

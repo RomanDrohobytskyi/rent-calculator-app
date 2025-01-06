@@ -4,9 +4,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import rent.calculator.com.model.dto.PaymentDTO;
 import rent.calculator.com.model.dto.RentPriceDTO;
+import rent.calculator.com.model.dto.UtilityBillDTO;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -20,18 +22,35 @@ public class PaymentCalculationService {
         this.rentPrice = rentPriceService.getActual();
 
         paymentService.findPrevious(payment)
-                .ifPresent(previousPayment -> setPaymentCalculations(payment, previousPayment));
+                .map(previousPayment -> setPaymentCalculations(payment, previousPayment))
+                .orElseGet(() -> mapPaymentWithoutPreviousPayment(payment));
     }
 
-    private void setPaymentCalculations(PaymentDTO payment, PaymentDTO previousPayment) {
-        payment.setGasQuantity(payment.getGas().subtract(previousPayment.getGas()));
-        payment.setGasBill(multiplyAndScale(payment.getGasQuantity(), rentPrice.getGas()));
+    private PaymentDTO mapPaymentWithoutPreviousPayment(PaymentDTO payment) {
+        //TODO
+        return payment;
+    }
 
-        payment.setWaterQuantity(payment.getWater().subtract(previousPayment.getWater()));
-        payment.setWaterBill(multiplyAndScale(payment.getWaterQuantity(), rentPrice.getWater()));
+    private PaymentDTO setPaymentCalculations(PaymentDTO payment, PaymentDTO previousPayment) {
+        for (UtilityBillDTO utilityBill : payment.getUtilityBills()) {
+            Optional<UtilityBillDTO> previousPaymentUtilityBill = previousPayment.findFirstUtilityBillByType(utilityBill.getUtilityType());
 
-        payment.setElectricityQuantity(payment.getElectricity().subtract(previousPayment.getElectricity()));
-        payment.setElectricityBill(multiplyAndScale(payment.getElectricityQuantity(), rentPrice.getElectricity()));
+            previousPaymentUtilityBill.map(previousUtilityBill -> {
+                utilityBill.setConsumption(utilityBill.getMeterState().subtract(previousUtilityBill.getMeterState()));
+                utilityBill.setCost(multiplyAndScale(utilityBill.getConsumption(), getRentPriceByUtilityBillType(utilityBill)));
+                return utilityBill;
+            });
+        }
+
+        return payment;
+    }
+
+    private BigDecimal getRentPriceByUtilityBillType(UtilityBillDTO utilityBill) {
+        return switch (utilityBill.getUtilityType()) {
+            case GAS -> rentPrice.getGas();
+            case ELECTRICITY -> rentPrice.getElectricity();
+            case WATER -> rentPrice.getWater();
+        };
     }
 
     private BigDecimal multiplyAndScale(BigDecimal a, BigDecimal b) {

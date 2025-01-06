@@ -31,9 +31,9 @@ public class PaymentCreationServiceTest {
 
     PaymentDTO mockPayment() {
         return PaymentDTO.builder()
-                .water(BigDecimal.valueOf(1077.11))
+                /*.water(BigDecimal.valueOf(1077.11))
                 .electricity(BigDecimal.valueOf(373.5))
-                .gas(BigDecimal.valueOf(768.64))
+                .gas(BigDecimal.valueOf(768.64))*/
                 .paymentDate(LocalDate.now())
                 .creationDate(LocalDateTime.now())
                 .build();

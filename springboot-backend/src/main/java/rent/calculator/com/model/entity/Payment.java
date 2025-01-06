@@ -4,12 +4,12 @@ import lombok.*;
 import org.hibernate.annotations.Nationalized;
 import rent.calculator.com.model.enums.PaymentState;
 
-import javax.persistence.Column;
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -18,21 +18,6 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Payment extends BaseEntity {
-/*    private BigDecimal gas;
-    private BigDecimal gasQuantity;
-    private BigDecimal gasBill;
-    private BigDecimal water;
-    private BigDecimal waterQuantity;
-    private BigDecimal waterBill;
-    private BigDecimal electricity;
-    private BigDecimal electricityQuantity;
-    private BigDecimal electricityBill;*/
-    @Embedded
-    private Gas gas;
-    @Embedded
-    private Water water;
-    @Embedded
-    private Electricity electricity;
     private BigDecimal total;
     private LocalDateTime creationDate;
     private LocalDateTime modificationDate;
@@ -42,4 +27,7 @@ public class Payment extends BaseEntity {
     @Nationalized
     @Column(columnDefinition = "TEXT")
     private String emailMessage;
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval=true)
+    @Builder.Default
+    private Set<UtilityBill> utilityBills = new HashSet<>();
 }

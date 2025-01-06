@@ -29,9 +29,7 @@ public class PaymentMessageCreationService {
                 .formatTitle(month)
                 .formatDescription(month)
                 .formatMedia(payment)
-                .formatWater(payment, previousPayment)
-                .formatGas(payment, previousPayment)
-                .formatElectricity(payment, previousPayment)
+                .formatUtilityBills(payment, previousPayment)
                 .formatTotal(payment)
                 .formatRegards()
                 .build();

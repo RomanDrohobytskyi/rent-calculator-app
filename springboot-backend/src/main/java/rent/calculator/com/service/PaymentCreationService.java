@@ -45,7 +45,7 @@ public class PaymentCreationService {
         try{
             paymentRepository.deleteById(id);
         } catch (Exception e) {
-            log.error("Could not delete payment " + id + ". " + e);
+            log.error("Could not delete payment {}: {}", id, e);
         }
     }
 }

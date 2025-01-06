@@ -4,8 +4,12 @@ import lombok.RequiredArgsConstructor;
 import rent.calculator.com.model.dto.PaymentDTO;
 import rent.calculator.com.model.dto.PaymentMessageDTO;
 import rent.calculator.com.model.dto.RentPriceDTO;
+import rent.calculator.com.model.dto.UtilityBillDTO;
+import rent.calculator.com.model.enums.UtilityBillType;
 
 import java.math.BigDecimal;
+import java.util.Map;
+import java.util.Objects;
 
 import static java.lang.String.format;
 import static rent.calculator.com.utils.FormattingUtils.format;
@@ -50,27 +54,18 @@ public class PaymentMessageFormatter {
         return this;
     }
 
-    public PaymentMessageFormatter formatWater(PaymentDTO payment, PaymentDTO previousPayment) {
-        messageBuilder.append(format(message.getWater(), format(payment.getWater()),
-                        format(previousPayment.getWater()),
-                        format(payment.getWater().subtract(previousPayment.getWater()))))
-                .append(NEW_LINE);
-        return this;
-    }
+    public PaymentMessageFormatter formatUtilityBills(PaymentDTO payment, PaymentDTO previousPayment) {
+        Map<UtilityBillType, String> messageByType = message.getUtilityBillsMessages();
+        for (UtilityBillDTO utilityBill : payment.getUtilityBills()) {
+            String message = messageByType.get(utilityBill.getUtilityType());
+            BigDecimal previousBillMeterState = previousPayment.findFirstUtilityBillByType(utilityBill.getUtilityType())
+                    .map(UtilityBillDTO::getMeterState)
+                    .orElse(BigDecimal.ZERO);
 
-    public PaymentMessageFormatter formatGas(PaymentDTO payment, PaymentDTO previousPayment) {
-        messageBuilder.append(format(message.getGas(), format(payment.getGas()),
-                        format(previousPayment.getGas()),
-                        format(payment.getGas().subtract(previousPayment.getGas()))))
-                .append(NEW_LINE);
-        return this;
-    }
-
-    public PaymentMessageFormatter formatElectricity(PaymentDTO payment, PaymentDTO previousPayment) {
-        messageBuilder.append(format(message.getElectricity(), format(payment.getElectricity()),
-                        format(previousPayment.getElectricity()),
-                        format(payment.getElectricity().subtract(previousPayment.getElectricity()))))
-                .append(NEW_LINE);
+            messageBuilder.append(format(message, format(utilityBill.getMeterState()),
+                            format(previousBillMeterState),
+                            format(Objects.requireNonNullElse(utilityBill.getConsumption(), BigDecimal.ZERO))))
+                    .append(NEW_LINE);        }
         return this;
     }
 
@@ -90,9 +85,10 @@ public class PaymentMessageFormatter {
     }
 
     private BigDecimal sumMedia(PaymentDTO payment) {
-        return payment.getGasBill()
-                .add(payment.getElectricityBill())
-                .add(payment.getWaterBill());
+        return payment.getUtilityBills().stream()
+                .map(UtilityBillDTO::getCost)
+                .filter(Objects::nonNull)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
 }
