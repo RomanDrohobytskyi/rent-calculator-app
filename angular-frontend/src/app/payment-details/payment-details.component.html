@@ -5,43 +5,36 @@
   <tr>
     <td>
       <div>
-        <label><b>ID</b></label> {{payment.id}}
+        <label><b>ID</b></label> {{ payment.id }}
       </div>
       <div>
-        <label><b>Water</b></label> {{payment.water}}
+        <label><b>Utility bills</b></label>
+        <ul class="utility-bills">
+          <li *ngFor="let utilityBill of payment.utilityBills">
+            <strong>{{ utilityBill.utilityType }} </strong> <br>
+            State: {{ utilityBill.meterState }} <br>
+            Consumption: {{ utilityBill.consumption }} <br>
+            Cost: {{ utilityBill.cost }}
+          </li>
+        </ul>
       </div>
       <div>
-        <label><b>Electricity</b></label> {{payment.electricity}}
-      </div>
-      <div>
-        <label><b>Gas</b></label> {{payment.gas}}
-      </div>
-      <div>
-        <label><b>Water bill</b></label> {{payment.waterBill}}
-      </div>
-      <div>
-        <label><b>Electricity bill</b></label> {{payment.electricityBill}}
-      </div>
-      <div>
-        <label><b>Gas bill</b></label> {{payment.gasBill}}
-      </div>
-      <div>
-        <label><b>Total</b></label> {{payment.total}}
+        <label><b>Total</b></label> {{ payment.total }}
       </div>
     </td>
 
     <td>
       <div>
-        <label><b>Creation Date</b></label> {{payment.creationDate}}
+        <label><b>Creation Date</b></label> {{ payment.creationDate }}
       </div>
       <div>
-        <label><b>Payment Date</b></label> {{payment.paymentDate}}
+        <label><b>Payment Date</b></label> {{ payment.paymentDate }}
       </div>
     </td>
 
     <td>
       <div style="max-width: 40%;">
-        <label><b>Email</b></label> {{payment.emailMessage}}
+        <label><b>Message</b></label> {{ payment.emailMessage }}
       </div>
     </td>
   </tr>
