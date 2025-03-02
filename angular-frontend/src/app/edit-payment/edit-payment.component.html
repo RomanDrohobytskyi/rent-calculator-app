@@ -1,0 +1,67 @@
+<div class="col-md-6 offset-md-3">
+  <div class="text-center">
+    <h3>Edit payment for: {{ payment.paymentDate }}</h3>
+    <label>Creation date</label> {{ payment.creationDate }}
+  </div>
+
+  <form (ngSubmit)="editPayment()">
+    <div>
+      <fieldset *ngFor="let utilityBill of payment.utilityBills" class="mb-4 p-3 border rounded">
+        <legend class="text-center">{{ utilityBill.utilityType }}</legend>
+
+        <div class="form-group">
+          <label for="{{ utilityBill.utilityType }}-meterState">State</label>
+          <input type="number" class="form-control" id="{{ utilityBill.utilityType }}-meterState"
+                 [(ngModel)]="utilityBill.meterState" name="{{ utilityBill.utilityType }}-meterState">
+        </div>
+
+        <div class="form-group">
+          <label for="{{ utilityBill.utilityType }}-consumption">Consumption</label>
+          <input type="number" class="form-control" id="{{ utilityBill.utilityType }}-consumption"
+                 [(ngModel)]="utilityBill.consumption" name="{{ utilityBill.utilityType }}-consumption">
+        </div>
+
+        <div class="form-group">
+          <label for="{{ utilityBill.utilityType }}-cost">Cost</label>
+          <input type="number" class="form-control" id="{{ utilityBill.utilityType }}-cost"
+                 [(ngModel)]="utilityBill.cost" name="{{ utilityBill.utilityType }}-cost">
+        </div>
+      </fieldset>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <label for="total">Total</label>
+        <input type="number" class="form-control" id="total"
+               [(ngModel)]="payment.total" name="total">
+      </div>
+      <div class="col-md-6">
+        <label for="paymentDate">Payment Date</label>
+        <input type="date" class="form-control" id="paymentDate"
+               [(ngModel)]="payment.paymentDate" name="paymentDate">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="emailMessage">Message</label>
+      <textarea type="text" class="form-control" id="emailMessage"
+                [(ngModel)]="payment.emailMessage" name="emailMessage">
+      </textarea>
+    </div>
+
+    <div class="row mt-3">
+      <div class="col-md-6">
+        <button class="btn btn-success w-100" type="submit" [disabled]="loading">
+          <span *ngIf="loading" class="spinner-border spinner-border-sm"></span>
+          Update
+        </button>
+      </div>
+      <div class="col-md-6">
+        <button (click)="recalculate()" class="btn btn-info w-100" [disabled]="loading">
+          <span *ngIf="loading" class="spinner-border spinner-border-sm"></span>
+          Recalculate
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

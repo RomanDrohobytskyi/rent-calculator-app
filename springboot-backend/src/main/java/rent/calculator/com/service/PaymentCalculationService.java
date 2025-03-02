@@ -32,16 +32,17 @@ public class PaymentCalculationService {
     }
 
     private PaymentDTO setPaymentCalculations(PaymentDTO payment, PaymentDTO previousPayment) {
+        BigDecimal totalCostOfUtilityBills = BigDecimal.ZERO;
         for (UtilityBillDTO utilityBill : payment.getUtilityBills()) {
             Optional<UtilityBillDTO> previousPaymentUtilityBill = previousPayment.findFirstUtilityBillByType(utilityBill.getUtilityType());
 
-            previousPaymentUtilityBill.map(previousUtilityBill -> {
+            previousPaymentUtilityBill.ifPresent(previousUtilityBill -> {
                 utilityBill.setConsumption(utilityBill.getMeterState().subtract(previousUtilityBill.getMeterState()));
                 utilityBill.setCost(multiplyAndScale(utilityBill.getConsumption(), getRentPriceByUtilityBillType(utilityBill)));
-                return utilityBill;
             });
+            totalCostOfUtilityBills = totalCostOfUtilityBills.add(utilityBill.getCost());
         }
-
+        payment.setTotal(totalCostOfUtilityBills);
         return payment;
     }
 

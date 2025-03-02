@@ -19,6 +19,9 @@ ng serve --port 4200
 
 ```bash
 cd ./angular-frontend/
+```
+
+```bash
 ng serve --port 4200
 ```
 

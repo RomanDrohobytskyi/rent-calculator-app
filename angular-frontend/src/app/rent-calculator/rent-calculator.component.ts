@@ -30,7 +30,7 @@ export class RentCalculatorComponent implements OnInit {
     this.router.navigate(['payment-details', id]);
   }
 
-  updatePayment(id: number): void {
+  editPayment(id: number): void {
     this.router.navigate(['edit-payment', id]);
   }
 

@@ -19,8 +19,12 @@
         <li *ngFor="let utilityBill of payment.utilityBills">
           <strong>{{ utilityBill.utilityType }} </strong> <br>
           State: {{ utilityBill.meterState }} <br>
-          Consumption: {{ utilityBill.consumption }} <br>
-          Cost: {{ utilityBill.cost }}
+          <div *ngIf="utilityBill.consumption">
+            Consumption: {{ utilityBill.consumption }} <br>
+          </div>
+          <div *ngIf="utilityBill.cost">
+            Cost: {{ utilityBill.cost }}
+          </div>
         </li>
       </ul>
     </td>
@@ -30,7 +34,8 @@
     <td>{{ payment.modificationDate }}</td>
     <td class="inline">
       <button (click)="paymentDetails(payment.id)" class="btn btn-info">View</button>
-      <button (click)="updatePayment(payment.id)" class="btn btn-info">Update</button>
+      <button (click)="editPayment(payment.id)" class="btn btn-info">Edit</button>
+      <button (click)="archivePayment(payment.id)" class="btn btn-info">Archive</button>
       <button (click)="archivePayment(payment.id)" class="btn btn-danger">Delete</button>
     </td>
   </tr>

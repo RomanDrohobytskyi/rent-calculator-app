@@ -1,4 +1,4 @@
-package rent.calculator.com.service;
+package rent.calculator.com.payment.message;
 
 import lombok.RequiredArgsConstructor;
 import rent.calculator.com.model.dto.PaymentDTO;

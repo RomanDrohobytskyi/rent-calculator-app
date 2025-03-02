@@ -35,9 +35,4 @@ export class PaymentService {
   recalculate(payment: Payment): Observable<object> {
     return this.httpClient.put(`${this.baseURL}/recalculate`, payment);
   }
-
-  /*
-  deleteEmployee(id: number): Observable<Object>{
-    return this.httpClient.delete(`${this.baseURL}/${id}`);
-  }*/
 }
