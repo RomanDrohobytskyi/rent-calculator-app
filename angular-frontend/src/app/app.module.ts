@@ -7,7 +7,7 @@ import { FormsModule} from '@angular/forms';
 import {AddPaymentComponent} from './add-payment/add-payment-component';
 import {RentCalculatorComponent} from './rent-calculator/rent-calculator.component';
 import {PaymentDetailsComponent} from './payment-details/payment-details.component';
-import {UpdatePaymentComponent} from './edit-payment/update-payment.component';
+import {EditPaymentComponent} from './edit-payment/edit-payment.component';
 import {ConfigurationComponent} from './configuration/configuration.component';
 import {MaterialModule} from './material/material.module';
 
@@ -17,7 +17,7 @@ import {MaterialModule} from './material/material.module';
     RentCalculatorComponent,
     AddPaymentComponent,
     PaymentDetailsComponent,
-    UpdatePaymentComponent,
+    EditPaymentComponent,
     ConfigurationComponent
   ],
   imports: [

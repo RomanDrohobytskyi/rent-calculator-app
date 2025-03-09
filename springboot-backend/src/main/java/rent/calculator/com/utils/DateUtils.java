@@ -6,7 +6,13 @@ import static java.time.format.TextStyle.FULL_STANDALONE;
 import static rent.calculator.com.utils.CustomLocale.polishLocale;
 
 public class DateUtils {
+
+    public static String getStringRepresentationOfPaymentMonth(PaymentDTO payment) {
+        return payment.getPaymentDate().getMonth().getDisplayName(FULL_STANDALONE, polishLocale());
+    }
+
     public static String currentMonth(PaymentDTO payment) {
         return payment.getPaymentDate().getMonth().getDisplayName(FULL_STANDALONE, polishLocale());
     }
+
 }

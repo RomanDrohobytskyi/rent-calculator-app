@@ -4,9 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import rent.calculator.com.model.dto.PaymentMessageDTO;
-import rent.calculator.com.model.dto.RentPriceDTO;
-import rent.calculator.com.service.PaymentMessageService;
-import rent.calculator.com.service.RentPriceService;
+import rent.calculator.com.payment.message.PaymentMessageService;
 
 import static org.springframework.http.ResponseEntity.ok;
 
@@ -22,22 +20,10 @@ public class ConfigurationController {
         1: restore backup from file
      */
 
-    @GetMapping
-    public void onConfiguration() {
-        // display prices and messages
-    }
-
     @GetMapping("/messages")
     public PaymentMessageDTO getMessages() {
         return paymentMessageService.getActual();
     }
-
-    /*
-    *     @PutMapping("/payments/update/{id}")
-    public ResponseEntity<PaymentDTO> update(@PathVariable Long id, @RequestBody PaymentDTO paymentDTO) {
-        PaymentDTO updated = paymentService.update(paymentDTO);
-        return ok(updated);
-    }*/
 
     @PutMapping("/update/messages/{id}")
     public ResponseEntity<PaymentMessageDTO> updateMessages(@PathVariable Long id, @RequestBody PaymentMessageDTO paymentMessageDTO) {

@@ -10,17 +10,14 @@ import {Payment} from '../model/payment';
 })
 export class PaymentDetailsComponent implements OnInit {
 
-  id: number;
   payment: Payment;
 
   constructor(private route: ActivatedRoute,
               private paymentService: PaymentService) { }
 
   ngOnInit(): void {
-    this.id = this.route.snapshot.params.id;
-
-    this.payment = new Payment();
-    this.paymentService.getPaymentById(this.id).subscribe( payment => {
+    const paymentId = this.route.snapshot.params.id;
+    this.paymentService.getPaymentById(paymentId).subscribe(payment => {
       this.payment = payment;
     });
   }

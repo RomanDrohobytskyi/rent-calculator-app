@@ -1,41 +1,52 @@
 package rent.calculator.com.service;
 
-import org.junit.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.modelmapper.ModelMapper;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.transaction.annotation.Transactional;
+import rent.calculator.com.TestDatabaseInitializer;
 import rent.calculator.com.model.dto.PaymentDTO;
-import rent.calculator.com.repository.PaymentRepository;
+import rent.calculator.com.model.dto.UtilityBillDTO;
+import rent.calculator.com.model.enums.UtilityBillType;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Set;
 
-public class PaymentCreationServiceTest {
-    @InjectMocks
-    PaymentCreationService paymentCreationService;
-    @Mock
-    PaymentRepository paymentRepository;
-    @Mock
-    PaymentMessageCreationService paymentMessageCreationService;
-    @Mock
-    PaymentCalculationService paymentCalculationService;
-    @Mock
-    ModelMapper modelMapper = new ModelMapper();
+import static org.assertj.core.api.Assertions.assertThat;
+
+@SpringBootTest
+@ActiveProfiles("test")
+@Transactional
+public class PaymentCreationServiceTest extends TestDatabaseInitializer {
+
+    @Autowired
+    private PaymentCreationService paymentCreationService;
 
     @Test
     public void shouldCreatePayment() {
-        //PaymentDTO paymentDTO = mockActualPayment();
-        //paymentCreationService.save(paymentDTO);
-    }
+        // given
+        UtilityBillDTO gasBill = UtilityBillDTO.builder()
+                .utilityType(UtilityBillType.GAS)
+                .meterState(BigDecimal.valueOf(10))
+                .build();
 
-    PaymentDTO mockPayment() {
-        return PaymentDTO.builder()
-                .water(BigDecimal.valueOf(1077.11))
-                .electricity(BigDecimal.valueOf(373.5))
-                .gas(BigDecimal.valueOf(768.64))
+        PaymentDTO payment = PaymentDTO.builder()
                 .paymentDate(LocalDate.now())
                 .creationDate(LocalDateTime.now())
+                .utilityBills(Set.of(gasBill))
                 .build();
+        // when
+        PaymentDTO savedPayment = paymentCreationService.save(payment);
+
+        // then
+        assertThat(savedPayment).isNotNull();
+        assertThat(savedPayment.getPaymentDate()).isEqualTo(payment.getPaymentDate());
+        assertThat(savedPayment.getUtilityBills()).isNotEmpty();
+        assertThat(savedPayment.getUtilityBills()).hasSize(1);
     }
+
+
 }

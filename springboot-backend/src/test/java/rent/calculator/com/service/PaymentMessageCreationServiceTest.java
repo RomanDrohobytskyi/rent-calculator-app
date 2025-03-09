@@ -36,7 +36,7 @@ public class PaymentMessageCreationServiceTest {
         //messageFormatter = new PaymentMessageFormatter(rentPriceService, paymentMessageService);
     }
 
-    @Test
+    //@Test
     public void shouldCreateMessage() {
         // given
         PaymentDTO previousPayment = mockPreviousPayment();

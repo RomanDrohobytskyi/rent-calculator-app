@@ -30,6 +30,6 @@ public class RentPriceConfigurationController {
     @PutMapping("/update")
     public ResponseEntity<RentPriceDTO> addRentPrice(@RequestBody RentPriceDTO rentPrice) {
         RentPriceDTO updatedRentPrice = rentPriceService.addActualRentPrice(rentPrice);
-        return ok(rentPrice);
+        return ok(updatedRentPrice);
     }
 }

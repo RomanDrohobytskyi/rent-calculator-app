@@ -1,6 +1,9 @@
 package rent.calculator.com.model.dto;
 
 import lombok.*;
+import rent.calculator.com.model.enums.UtilityBillType;
+
+import java.util.Map;
 
 @Getter
 @Setter
@@ -18,4 +21,10 @@ public class PaymentMessageDTO {
     private String total;
     private String regards;
     private boolean actual;
+
+    public Map<UtilityBillType, String> getUtilityBillsMessages() {
+        return Map.of(UtilityBillType.WATER, water,
+                UtilityBillType.GAS, gas,
+                UtilityBillType.ELECTRICITY, electricity);
+    }
 }

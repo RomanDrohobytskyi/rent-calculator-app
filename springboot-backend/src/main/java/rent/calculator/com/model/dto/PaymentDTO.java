@@ -2,11 +2,17 @@ package rent.calculator.com.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
+import org.springframework.util.CollectionUtils;
 import rent.calculator.com.model.enums.PaymentState;
+import rent.calculator.com.model.enums.UtilityBillType;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -15,15 +21,6 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class PaymentDTO {
     private Long id;
-    private BigDecimal gas;
-    private BigDecimal gasQuantity;
-    private BigDecimal gasBill;
-    private BigDecimal water;
-    private BigDecimal waterQuantity;
-    private BigDecimal waterBill;
-    private BigDecimal electricity;
-    private BigDecimal electricityQuantity;
-    private BigDecimal electricityBill;
     private BigDecimal total;
     private LocalDateTime creationDate;
     private LocalDateTime modificationDate;
@@ -32,4 +29,14 @@ public class PaymentDTO {
     @Builder.Default
     private PaymentState state = PaymentState.NEW;
     private String emailMessage;
+    private Set<UtilityBillDTO> utilityBills = new HashSet<>();
+
+    public Optional<UtilityBillDTO> findFirstUtilityBillByType(UtilityBillType type) {
+        if (Objects.isNull(type) || CollectionUtils.isEmpty(utilityBills)) {
+            return Optional.empty();
+        }
+        return this.getUtilityBills().stream()
+                .filter(previousUtilityBill -> previousUtilityBill.getUtilityType().equals(type))
+                .findFirst();
+    }
 }

@@ -10,7 +10,6 @@ import rent.calculator.com.repository.RentPriceRepository;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static rent.calculator.com.model.dto.RentPriceDTO.builder;
 
 @Service
 @RequiredArgsConstructor
@@ -35,7 +34,7 @@ public class RentPriceService {
     public RentPriceDTO getActual() {
         return rentPriceRepository.getByActualIsTrue()
                 .map(price -> modelMapper.map(price, RentPriceDTO.class))
-                .orElseGet(() -> builder().build());
+                .orElseGet(() -> RentPriceDTO.builder().build());
     }
 
     public List<RentPriceDTO> getArchivalPrices() {

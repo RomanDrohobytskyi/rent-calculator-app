@@ -9,3 +9,12 @@
 .inline {
   display: flex;
 }
+
+.utility-bills {
+  width: max-content;
+  display: flex;
+  justify-content: flex-start;
+  list-style: none;
+  gap: 10px;
+  padding: 0;
+}

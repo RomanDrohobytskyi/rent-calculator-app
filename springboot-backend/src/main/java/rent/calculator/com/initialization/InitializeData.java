@@ -14,7 +14,7 @@ import javax.sql.DataSource;
 @Component
 @RequiredArgsConstructor
 public class InitializeData {
-    private final String initScriptPath = "sql/init-script.sql";
+    private final static String initScriptPath = "sql/init-script.sql";
     private final DataSource dataSource;
 
     @EventListener(ApplicationReadyEvent.class)
@@ -27,8 +27,7 @@ public class InitializeData {
         try {
             return new ClassPathResource(initScriptPath);
         } catch (Exception e) {
-            e.printStackTrace();
-            throw new IllegalArgumentException("Cannot load database init script!");
+            throw new IllegalArgumentException("Cannot load database init script!", e);
         }
     }
 

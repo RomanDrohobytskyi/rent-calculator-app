@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import rent.calculator.com.model.dto.PaymentDTO;
+import rent.calculator.com.payment.facade.PaymentCreationFacade;
 import rent.calculator.com.service.PaymentService;
 
 import java.util.HashMap;
@@ -19,6 +20,7 @@ import static org.springframework.http.ResponseEntity.ok;
 @RequiredArgsConstructor
 public class RentCalculatorController {
     private final PaymentService paymentService;
+    private final PaymentCreationFacade paymentCreationFacade;
 
 /*TODO
 *  main controller
@@ -34,23 +36,23 @@ public class RentCalculatorController {
 
     @GetMapping("/payments/details/{id}")
     public ResponseEntity<PaymentDTO> paymentDetails(@PathVariable Long id) {
-        return of(paymentService.findByIdAndMapToDTO(id));
+        return of(paymentService.findById(id));
     }
 
     @PutMapping("/payments/update/{id}")
     public ResponseEntity<PaymentDTO> update(@PathVariable Long id, @RequestBody PaymentDTO paymentDTO) {
-        PaymentDTO updated = paymentService.update(paymentDTO);
+        PaymentDTO updated = paymentCreationFacade.update(paymentDTO);
         return ok(updated);
     }
 
     @PutMapping("/payments/recalculate")
     public PaymentDTO recalculate(@RequestBody PaymentDTO paymentDTO) {
-        return paymentService.recalculate(paymentDTO);
+        return paymentCreationFacade.recalculate(paymentDTO);
     }
 
     @DeleteMapping("/payments/delete/{id}")
     public ResponseEntity<Map<String, Boolean>> delete(@PathVariable Long id) {
-        paymentService.delete(id);
+        paymentCreationFacade.delete(id);
 
         Map<String, Boolean> response = new HashMap<>();
         response.put("deleted", Boolean.TRUE);
